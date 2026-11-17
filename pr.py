@@ -76,9 +76,14 @@ def ask_codex(folder, diff, request):
     return json.loads(result.final_response)
 
 def main():
+    # 絶対パスに変換する
     folder = str(Path(sys.argv[1] if len(sys.argv) > 1 else ".").expanduser().resolve())
+    # PR作成の依頼内容を取得する
+    # 第二引数として依頼内容を受け取る
+    # これってなにもなかったら自動で "PR作成よろしく" にするってこと？→あってそう。
     request = sys.argv[2] if len(sys.argv) > 2 else "PR作成よろしく"
 
+    # 第一引数はフォルダ、第二引数は依頼内容
     diff = safety_check(folder)
     print("Codexが説明文を考えています…")
     info = ask_codex(folder, diff, request)
@@ -114,3 +119,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+# そもそもこのスクリプトはなんなのか？
+# Gitの変更をもとに、PRの説明文やブランチ名、コミットメッセージを自動で考えてくれるツールです。
+# 実際のファイルの変更やコミット、pushはPythonが行い、PRの作成も自動で行います。
+
+# 実行したこと python pr.py
+# 起きたこと
+# 第二引数になにも入れなかったから、requestは "PR作成よろしく" になった
+# Codexが説明文を考えますが走る
+# その後、PRの内容が表示され、確認を求められる
