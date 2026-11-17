@@ -87,6 +87,10 @@ def ask_codex(folder, diff):
 
 
 def main():
+    # 引数が足りないときは、使い方を出して止める
+    if len(sys.argv) < 3:
+        sys.exit("使い方: python review.py <フォルダ> <PR番号>\n例: python review.py . 2")
+
     # 絶対パスに変換する
     folder = str(Path(sys.argv[1]).expanduser().resolve())
     pr = sys.argv[2]  # PRの番号→これって#〇〇であっているのか？
